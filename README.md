@@ -156,3 +156,4 @@ Without any customization the scripts can provide the following services (exampl
 | Travis CI | tsan                    | `gcc-8`     | `03,11,14`                    | default       | `debug`         |
 | Travis CI | ubsan                   | `gcc-8`     | `03,11,14`                    | default       | `debug`         |
 | Travis CI | valgrind                | `clang-6.0` | `03,11,14`                    | default       | `debug`         |
+
