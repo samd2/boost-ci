@@ -93,7 +93,7 @@ environment:
     #   B2_ADDRESS_MODEL: 32 # No 64bit support
 
     - FLAVOR: cygwin (32-bit)
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       ADDPATH: C:\cygwin\bin;
       # ADDCOMMANDS: '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat"'
       B2_ADDRESS_MODEL: 32
@@ -101,7 +101,7 @@ environment:
       B2_TOOLSET: gcc
 
     - FLAVOR: cygwin (64-bit)
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
       ADDPATH: C:\cygwin64\bin;
       # ADDCOMMANDS: '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"'
       B2_ADDRESS_MODEL: 64
