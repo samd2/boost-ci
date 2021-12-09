@@ -8,6 +8,22 @@ IF NOT DEFINED B2_CI_VERSION (
 
 PATH=%ADDPATH%%PATH%
 
+@ECHO OFF
+if "%B2_TOOLSET%" == "gcc" (
+    set cxx_exe="g++.exe"
+)else if "%B2_TOOLSET%" == "clang-win" (
+    set cxx_exe="clang-cl.exe"
+)else (
+    set cxx_exe=""
+)
+if NOT "%cxx_exe%" == "" (
+    call :GetPath %cxx_exe%,cxx_path
+    call :GetVersion %cxx_exe%,cxx_version
+    echo Compiler location: !cxx_path!
+    echo Compiler version: !cxx_version!
+)
+@ECHO ON
+
 SET B2_TOOLCXX=toolset=%B2_TOOLSET%
 
 IF DEFINED B2_CXXSTD (SET B2_CXXSTD=cxxstd=%B2_CXXSTD%)
@@ -30,3 +46,16 @@ IF DEFINED SCRIPT (
     REM Now go build...
     b2 --abbreviate-paths %B2_TARGETS% %B2_TOOLCXX% %B2_CXXSTD% %B2_CXXFLAGS% %B2_DEFINES% %B2_THREADING% %B2_ADDRESS_MODEL% %B2_LINK% %B2_VARIANT% -j3
 )
+
+EXIT /B %ERRORLEVEL%
+
+:GetPath
+for %%i in (%~1) do set %~2=%%~$PATH:i
+EXIT /B 0
+
+:GetVersion
+for /F "delims=" %%i in ('%~1 --version ^2^>^&^1') do set %~2=%%i & goto :done
+:done
+EXIT /B 0
+
+
