@@ -26,8 +26,10 @@ cd %BOOST_ROOT%
 IF DEFINED SCRIPT (
     call libs\%SELF%\%SCRIPT%
 ) ELSE (
+    ECHO Running gcc -v
+    gcc -v
     REM Echo the complete build command to the build log
     ECHO b2 --abbreviate-paths %B2_TARGETS% %B2_TOOLCXX% %B2_CXXSTD% %B2_CXXFLAGS% %B2_DEFINES% %B2_THREADING% %B2_ADDRESS_MODEL% %B2_LINK% %B2_VARIANT% -j%B2_JOBS% %B2_FLAGS%
     REM Now go build...
-    b2 --abbreviate-paths %B2_TARGETS% %B2_TOOLCXX% %B2_CXXSTD% %B2_CXXFLAGS% %B2_DEFINES% %B2_THREADING% %B2_ADDRESS_MODEL% %B2_LINK% %B2_VARIANT% -j%B2_JOBS% %B2_FLAGS%
+    b2 -d2 --abbreviate-paths %B2_TARGETS% %B2_TOOLCXX% %B2_CXXSTD% %B2_CXXFLAGS% %B2_DEFINES% %B2_THREADING% %B2_ADDRESS_MODEL% %B2_LINK% %B2_VARIANT% -j%B2_JOBS% %B2_FLAGS%
 )
