@@ -25,6 +25,8 @@
 
 set -ex
 
+echo "debug: Entering codecov.sh"
+
 . $(dirname "${BASH_SOURCE[0]}")/enforce.sh
 
 if [[ "$1" == "setup" ]]; then
@@ -52,7 +54,7 @@ elif [[ "$1" == "upload" ]]; then
         GCOV=gcov-${ver}
     fi
 
-    # install the latest lcov we know works
+    echo "install the latest lcov we know works"
     rm -rf /tmp/lcov
     cd /tmp
     git clone --depth 1 -b v1.15 https://github.com/linux-test-project/lcov.git
@@ -105,3 +107,9 @@ else
     echo "Invalid parameter for codecov.sh: '$1'." >&2
     false
 fi
+
+ls -al /tmp || true
+ls -alR /tmp/lcov || true
+
+echo "debug: leaving codecov.sh"
+
