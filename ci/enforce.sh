@@ -54,6 +54,7 @@ enforce_b2 "DEFINES"
 enforce_b2 "LINKFLAGS"
 enforce_b2 "TESTFLAGS"
 enforce_b2 "TOOLSET"
+enforce_b2 "ARCHITECTURE"
 
 # default language level: C++11
 if [ -z "$B2_CXXSTD" ]; then
@@ -110,6 +111,7 @@ else
   )
   append_b2_args B2_DEFINES define
   append_b2_args B2_INCLUDE include
+  append_b2_args B2_ARCHITECTURE architecture
   B2_ARGS=(
       "${B2_ARGS[@]}"
       ${B2_LINKFLAGS:+"linkflags=$B2_LINKFLAGS"}
