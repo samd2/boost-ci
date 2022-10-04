@@ -52,6 +52,7 @@ mkdir -p libs/$SELF
 cp -r $BOOST_CI_SRC_FOLDER/* libs/$SELF
 
 # debug boostorg/context
+git submodule update --init libs/context
 cd libs/context
 git branch -av
 git fetch
