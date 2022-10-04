@@ -51,15 +51,6 @@ git submodule update -q --init tools/boostdep
 mkdir -p libs/$SELF
 cp -r $BOOST_CI_SRC_FOLDER/* libs/$SELF
 
-# debug boostorg/context
-git submodule update --init libs/context
-cd libs/context
-git branch -av
-git fetch
-git branch -av
-git checkout "develop-#208"
-cd ../..
-
 export BOOST_ROOT="$(pwd)"
 export PATH="$(pwd):$PATH"
 
@@ -69,6 +60,16 @@ if [[ -n "$GIT_FETCH_JOBS" ]]; then
 fi
 
 $pythonexecutable tools/boostdep/depinst/depinst.py --include benchmark --include example --include examples --include tools "${DEPINST_ARGS[@]}" $DEPINST $SELF
+
+# debug boostorg/context
+pwd
+# git submodule update --init libs/context
+cd libs/context
+git branch -av
+git fetch
+git branch -av
+git checkout "develop-#208"
+cd ../..
 
 # Deduce B2_TOOLSET if unset from B2_COMPILER
 if [ -z "$B2_TOOLSET" ] && [ -n "$B2_COMPILER" ]; then
