@@ -51,6 +51,14 @@ git submodule update -q --init tools/boostdep
 mkdir -p libs/$SELF
 cp -r $BOOST_CI_SRC_FOLDER/* libs/$SELF
 
+# debug boostorg/context
+cd libs/context
+git branch -av
+git fetch
+git branch -av
+git checkout "develop-#208"
+cd ../..
+
 export BOOST_ROOT="$(pwd)"
 export PATH="$(pwd):$PATH"
 
