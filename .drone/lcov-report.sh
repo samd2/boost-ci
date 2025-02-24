@@ -26,13 +26,14 @@ cd "$BOOST_ROOT"
 git submodule update --init --recursive
 
 # Run at least one full build that installs everything
-cd libs/accumulators
-# required vars for codecov.sh:
-export BOOST_CI_SRC_FOLDER=$(pwd)
-export SELF=$(python3 "$CI_DIR/get_libname.py")
-# BOOST_ROOT already set
-$CODECOV_SCRIPT
-cd ../..
+# This is failing. Continue for now.
+# cd libs/accumulators
+# # required vars for codecov.sh:
+# export BOOST_CI_SRC_FOLDER=$(pwd)
+# export SELF=$(python3 "$CI_DIR/get_libname.py")
+# # BOOST_ROOT already set
+# $CODECOV_SCRIPT
+# cd ../..
 
 # The script runcodecov.sh will be pieced together in parts, enabling variables
 # to be included into the contents of the script.
@@ -61,14 +62,20 @@ else
     export BOOST_CI_SRC_FOLDER=$(pwd)
     export SELF=$(python3 "$CI_DIR/get_libname.py")
     # BOOST_ROOT already set
-    runcodecov.sh '
 
-textpart4="${RUNCODECOV_FLAGS}"
-# shellcheck disable=SC2016
-textpart5='
+    # Run the parts of travis/codecov.sh separately:
+    source "$CI_DIR"/codecov.sh "setup"
+    "$CI_DIR"/build.sh
     if [[ $? != 0 ]]; then
-        echo "..failed. CODECOV FAILED. LIBRARY $reponame"
-        echo "$reponame" >> /tmp/failed.txt
+        echo "..failed. CODECOV FAILED at build.sh. LIBRARY $reponame"
+        echo "$reponame build.sh" >> /tmp/failed.txt
+    fi
+
+    "$CI_DIR"/codecov.sh "upload"
+
+    if [[ $? != 0 ]]; then
+        echo "..failed. CODECOV FAILED coverage. LIBRARY $reponame"
+        echo "$reponame coverage" >> /tmp/failed.txt
     else
         echo "LIBRARY $reponame SUCCEEDED."
         echo "$reponame" >> /tmp/succeeded.txt
