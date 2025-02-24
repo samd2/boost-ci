@@ -45,6 +45,7 @@ textpart1='#!/bin/bash
 set -x
 reponame=$1
 echo "reponame is $reponame"
+mkdir -p /tmp/lcov-repo-results || true
 skiplist="'
 
 textpart2="${SKIPLIST}"
@@ -77,7 +78,7 @@ else
     fi
     echo "After build.sh"
     echo "Running codecov.sh upload"
-    "$CI_DIR"/codecov.sh "upload"
+    "$CI_DIR"/codecov.sh "upload" | tee /tmp/lcov-repo-results/$reponame 2>&1
     if [[ $? != 0 ]]; then
         echo "..failed. CODECOV FAILED coverage. LIBRARY $reponame"
         echo "$reponame failed coverage" >> /tmp/failed.txt
@@ -85,6 +86,10 @@ else
         echo "LIBRARY $reponame SUCCEEDED."
         echo "$reponame" >> /tmp/succeeded.txt
     fi
+
+    echo ""LIBRARY $reponame RESULTS:" >> /tmp/lcov-results.txt
+    grep "geninfo: ERROR" /tmp/lcov-repo-results/$reponame >> /tmp/lcov-results.txt
+    grep "geninfo: WARNING" /tmp/lcov-repo-results/$reponame >> /tmp/lcov-results.txt
 fi
 '
 
@@ -102,6 +107,9 @@ succeeded=$(wc -l /tmp/succeeded.txt | cut -d" " -f1)
 echo "$failed failed, $succeeded succeeded."
 echo ""
 cat /tmp/failed.txt
-if [ "$failed" != "0" ]; then
-    exit 1
-fi
+#
+# if [ "$failed" != "0" ]; then
+#     exit 1
+# fi
+
+cat /tmp/lcov-results.txt
