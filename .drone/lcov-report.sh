@@ -4,7 +4,6 @@ set -x
 set -e
 
 SKIPLIST=""
-RUNCODECOV_FLAGS=""
 
 : "${LCOV_SKIP_PATTERN:='^[9]'}" # Set default lcov skip pattern
 
@@ -57,6 +56,7 @@ textpart3='"
 
 if [[ "$reponame" =~ '
 textpart4="${LCOV_SKIP_PATTERN}"
+# shellcheck disable=SC2016
 textpart5=' ]]; then
 # if [[ "$reponame" =~ ^[9] ]]; then
    echo "skipping ahead X letters"
@@ -87,7 +87,7 @@ else
         echo "$reponame" >> /tmp/succeeded.txt
     fi
 
-    echo ""LIBRARY $reponame RESULTS:" >> /tmp/lcov-results.txt
+    echo "LIBRARY $reponame RESULTS:" >> /tmp/lcov-results.txt
     grep "geninfo: ERROR" /tmp/lcov-repo-results/$reponame >> /tmp/lcov-results.txt
     grep "geninfo: WARNING" /tmp/lcov-repo-results/$reponame >> /tmp/lcov-results.txt
 fi
