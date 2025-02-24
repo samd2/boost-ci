@@ -23,7 +23,7 @@ touch /tmp/succeeded.txt
 # cd boost
 cd "$BOOST_ROOT"
 # clone all submodules
-git submodule update --init
+git submodule update --init --recursive
 
 # Run at least one full build that installs everything
 cd libs/accumulators
