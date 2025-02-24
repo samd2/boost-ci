@@ -69,6 +69,7 @@ else
 
     # Run the parts of travis/codecov.sh separately:
     source "$CI_DIR"/codecov.sh "setup"
+    set +e
     "$CI_DIR"/build.sh
     if [[ $? != 0 ]]; then
         echo "..failed. CODECOV FAILED at build.sh. LIBRARY $reponame"
