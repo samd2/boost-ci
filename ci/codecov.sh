@@ -98,7 +98,8 @@ elif [[ "$coverage_action" == "collect" ]] || [[ "$coverage_action" == "upload" 
         LCOV_OPTIONS="${LCOV_OPTIONS} --rc lcov_branch_coverage=${LCOV_BRANCH_COVERAGE}"
 
     elif [[ "$LCOV_VERSION" =~ ^v[2-9] ]]; then
-        sudo apt-get -o Acquire::Retries="${NET_RETRY_COUNT:-3}" -y -q --no-install-suggests --no-install-recommends install libcapture-tiny-perl libdatetime-perl libjson-perl || true
+        sudo apt-get -o Acquire::Retries="${NET_RETRY_COUNT:-3}" -y -q --no-install-suggests --no-install-recommends install \
+            libcapture-tiny-perl libdatetime-perl libcpanel-json-xs-perl libjson-xs-perl || true
         LCOV_OPTIONS="${LCOV_OPTIONS} --rc branch_coverage=${LCOV_BRANCH_COVERAGE} ${lcov_ignore_errors_flag}"
     fi
 

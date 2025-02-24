@@ -88,8 +88,8 @@ else
     fi
 
     echo "LIBRARY $reponame RESULTS:" >> /tmp/lcov-results.txt
-    grep "geninfo: ERROR" /tmp/lcov-repo-results/$reponame >> /tmp/lcov-results.txt
-    grep "geninfo: WARNING" /tmp/lcov-repo-results/$reponame >> /tmp/lcov-results.txt
+    grep "geninfo: ERROR" /tmp/lcov-repo-results/$reponame >> /tmp/lcov-results.txt || true
+    grep "geninfo: WARNING" /tmp/lcov-repo-results/$reponame >> /tmp/lcov-results.txt || true
 fi
 '
 
