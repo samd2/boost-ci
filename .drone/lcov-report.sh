@@ -55,7 +55,7 @@ else
     export SELF=python3 "$CI_DIR/get_libname.py"
     runcodecov.sh '
 
-textpart4="${{RUNCODECOV_FLAGS}}"
+textpart4="${RUNCODECOV_FLAGS}"
 textpart5='
     if [[ $? != 0 ]]; then
         echo "..failed. CODECOV FAILED. LIBRARY $reponame"
