@@ -18,23 +18,8 @@ export EXPORT_BOOST_SRC_DIR="yes"
 touch /tmp/failed.txt
 touch /tmp/succeeded.txt
 
-# mkdir -p /opt/github/boostorg
-# cd /opt/github/boostorg
-# git clone -b "develop" --depth 1 "https://github.com/boostorg/boost.git"
-# cd boost
 cd "$BOOST_ROOT"
-# clone all submodules
 git submodule update --init --recursive
-
-# Run at least one full build that installs everything
-# This is failing. Continue for now.
-# cd libs/accumulators
-# # required vars for codecov.sh:
-# export BOOST_CI_SRC_FOLDER=$(pwd)
-# export SELF=$(python3 "$CI_DIR/get_libname.py")
-# # BOOST_ROOT already set
-# $CODECOV_SCRIPT
-# cd ../..
 
 # The script runcodecov.sh will be pieced together in parts, enabling variables
 # to be included into the contents of the script.
@@ -64,9 +49,15 @@ elif [[ "$skiplist" =~ $reponame ]]; then
     echo "repo in skiplist"
 else
     # required vars for codecov.sh:
+    # BOOST_ROOT is already set
     export BOOST_CI_SRC_FOLDER=$(pwd)
-    export SELF=$(python3 "$CI_DIR/get_libname.py")
-    # BOOST_ROOT already set
+    SELF=$(python3 "$CI_DIR/get_libname.py")
+    if [[ $? != 0 ]]; then
+        echo "..failed to determine SELF name of lib"
+        echo "$reponame failed to determine SELF variable. May be expected. Continuing." >> /tmp/failed.txt
+        exit 0
+    fi
+    export SELF
 
     # Run the parts of travis/codecov.sh separately:
     source "$CI_DIR"/codecov.sh "setup"
