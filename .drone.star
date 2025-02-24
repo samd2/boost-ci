@@ -14,10 +14,10 @@ linuxglobalimage="cppalliance/droneubuntu2204:1"
 
 def main(ctx):
   return [
-  linux_cxx("lcov report 1", "g++-12", packages="g++-12", buildtype="lcov-report", buildscript="drone", image="cppalliance/droneubuntu2204:1", environment={'LCOV_SKIP_PATTERN': '^[h-z]', 'LCOV_IGNORE_ERRORS_LEVEL': "off", 'B2_TOOLSET': 'gcc-12', 'B2_CXXSTD': '20'}, globalenv=globalenv)
-  linux_cxx("lcov report 2", "g++-12", packages="g++-12", buildtype="lcov-report", buildscript="drone", image="cppalliance/droneubuntu2204:1", environment={'LCOV_SKIP_PATTERN': '^[a-gl-z]', 'LCOV_IGNORE_ERRORS_LEVEL': "off", 'B2_TOOLSET': 'gcc-12', 'B2_CXXSTD': '20'}, globalenv=globalenv)
-  linux_cxx("lcov report 3", "g++-12", packages="g++-12", buildtype="lcov-report", buildscript="drone", image="cppalliance/droneubuntu2204:1", environment={'LCOV_SKIP_PATTERN': '^[a-ku-z]', 'LCOV_IGNORE_ERRORS_LEVEL': "off", 'B2_TOOLSET': 'gcc-12', 'B2_CXXSTD': '20'}, globalenv=globalenv)
-  linux_cxx("lcov report 4", "g++-12", packages="g++-12", buildtype="lcov-report", buildscript="drone", image="cppalliance/droneubuntu2204:1", environment={'LCOV_SKIP_PATTERN': '^[a-t]', 'LCOV_IGNORE_ERRORS_LEVEL': "off", 'B2_TOOLSET': 'gcc-12', 'B2_CXXSTD': '20'}, globalenv=globalenv)
+  linux_cxx("lcov report 1", "g++-12", packages="g++-12", buildtype="lcov-report", buildscript="drone", image="cppalliance/droneubuntu2204:1", environment={'LCOV_SKIP_PATTERN': '^[h-z]', 'LCOV_IGNORE_ERRORS_LEVEL': "off", 'B2_TOOLSET': 'gcc-12', 'B2_CXXSTD': '20'}, globalenv=globalenv),
+  linux_cxx("lcov report 2", "g++-12", packages="g++-12", buildtype="lcov-report", buildscript="drone", image="cppalliance/droneubuntu2204:1", environment={'LCOV_SKIP_PATTERN': '^[a-gl-z]', 'LCOV_IGNORE_ERRORS_LEVEL': "off", 'B2_TOOLSET': 'gcc-12', 'B2_CXXSTD': '20'}, globalenv=globalenv),
+  linux_cxx("lcov report 3", "g++-12", packages="g++-12", buildtype="lcov-report", buildscript="drone", image="cppalliance/droneubuntu2204:1", environment={'LCOV_SKIP_PATTERN': '^[a-ku-z]', 'LCOV_IGNORE_ERRORS_LEVEL': "off", 'B2_TOOLSET': 'gcc-12', 'B2_CXXSTD': '20'}, globalenv=globalenv),
+  linux_cxx("lcov report 4", "g++-12", packages="g++-12", buildtype="lcov-report", buildscript="drone", image="cppalliance/droneubuntu2204:1", environment={'LCOV_SKIP_PATTERN': '^[a-t]', 'LCOV_IGNORE_ERRORS_LEVEL': "off", 'B2_TOOLSET': 'gcc-12', 'B2_CXXSTD': '20'}, globalenv=globalenv),
   ]
 
 # from https://github.com/boostorg/boost-ci
