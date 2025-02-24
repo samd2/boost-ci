@@ -27,7 +27,10 @@ git submodule update --init
 
 # Run at least one full build that installs everything
 cd libs/accumulators
-
+# required vars for codecov.sh:
+export BOOST_CI_SRC_FOLDER=$(pwd)
+export SELF=$(python3 "$CI_DIR/get_libname.py")
+# BOOST_ROOT already set
 $CODECOV_SCRIPT
 cd ../..
 
@@ -38,7 +41,7 @@ reponame=$1
 echo "reponame is $reponame"
 skiplist="'
 
-textpart2="${SKIPLIST}}"
+textpart2="${SKIPLIST}"
 
 # shellcheck disable=SC2016
 textpart3='"
@@ -51,10 +54,10 @@ if [[ "$reponame" =~ ^[a-fh-z] ]]; then
 elif [[ "$skiplist" =~ $reponame ]]; then
     echo "repo in skiplist"
 else
+    # required vars for codecov.sh:
     export BOOST_CI_SRC_FOLDER=$(pwd)
-    # BOOST_ROOT
-    export SELF
-    export SELF=python3 "$CI_DIR/get_libname.py"
+    export SELF=$(python3 "$CI_DIR/get_libname.py")
+    # BOOST_ROOT already set
     runcodecov.sh '
 
 textpart4="${RUNCODECOV_FLAGS}"
