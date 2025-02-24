@@ -2,7 +2,7 @@
 # subject to the Boost Software License, Version 1.0. (See accompanying
 # file LICENSE.txt)
 #
-# Copyright S. Darwin 2025
+# Copyright S. Darwin 2025.
 
 # For Drone CI we use the Starlark scripting language to reduce duplication.
 # As the yaml syntax for Drone CI is rather limited.

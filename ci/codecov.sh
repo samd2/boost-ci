@@ -59,7 +59,7 @@ elif [[ "$coverage_action" == "collect" ]] || [[ "$coverage_action" == "upload" 
     : "${LCOV_BRANCH_COVERAGE:=1}" # Set default for branch coverage
 
     : "${LCOV_IGNORE_ERRORS_LEVEL:="standard"}" # Set default error level. See below.
-    
+
     case $LCOV_IGNORE_ERRORS_LEVEL in
     off)
         # All errors are potentially fatal.
@@ -84,7 +84,7 @@ elif [[ "$coverage_action" == "collect" ]] || [[ "$coverage_action" == "upload" 
         echo "Please correct this. Exiting."
         exit 1
     esac
-    
+
     if [ -n "${lcov_errors_to_ignore}" ]; then
         lcov_ignore_errors_flag="--ignore-errors ${lcov_errors_to_ignore}"
     else
