@@ -52,7 +52,9 @@ textpart3='"
 # Filters.
 # jump ahead to continue testing
 
-if [[ "$reponame" =~ ^[a-fh-z] ]]; then
+if [[ "$reponame" =~ '
+textpart4="${LCOV_SKIP_PATTERN}"
+textpart5=' ]]; then
 # if [[ "$reponame" =~ ^[9] ]]; then
    echo "skipping ahead X letters"
 elif [[ "$skiplist" =~ $reponame ]]; then
@@ -68,14 +70,14 @@ else
     "$CI_DIR"/build.sh
     if [[ $? != 0 ]]; then
         echo "..failed. CODECOV FAILED at build.sh. LIBRARY $reponame"
-        echo "$reponame build.sh" >> /tmp/failed.txt
+        echo "$reponame failed build.sh" >> /tmp/failed.txt
     fi
 
     "$CI_DIR"/codecov.sh "upload"
 
     if [[ $? != 0 ]]; then
         echo "..failed. CODECOV FAILED coverage. LIBRARY $reponame"
-        echo "$reponame coverage" >> /tmp/failed.txt
+        echo "$reponame failed coverage" >> /tmp/failed.txt
     else
         echo "LIBRARY $reponame SUCCEEDED."
         echo "$reponame" >> /tmp/succeeded.txt
