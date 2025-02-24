@@ -70,7 +70,7 @@ fi
 textsource="${textpart1}${textpart2}${textpart3}${textpart4}${textpart5}"
 echo "$textsource" > /usr/local/bin/runcodecov.sh
 chmod 755 /usr/local/bin/runcodecov.sh
-echo "checking runcodecov.sh
+echo "checking runcodecov.sh"
 cat /usr/local/bin/runcodecov.sh
 
 git submodule foreach 'runcodecov.sh $name'
