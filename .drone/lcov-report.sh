@@ -34,6 +34,9 @@ export SELF=$(python3 "$CI_DIR/get_libname.py")
 $CODECOV_SCRIPT
 cd ../..
 
+# The script runcodecov.sh will be pieced together in parts, enabling variables
+# to be included into the contents of the script.
+
 # shellcheck disable=SC2016
 textpart1='#!/bin/bash
 set -x

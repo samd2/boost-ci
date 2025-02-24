@@ -8,8 +8,8 @@
 # As the yaml syntax for Drone CI is rather limited.
 #
 #
-#globalenv={'B2_CI_VERSION': '1', 'B2_VARIANT': 'debug,release', 'B2_FLAGS': 'warnings=extra warnings-as-errors=on'}
-globalenv={'B2_CI_VERSION': '1', 'B2_VARIANT': 'release''}
+# globalenv={'B2_CI_VERSION': '1', 'B2_VARIANT': 'debug,release', 'B2_FLAGS': 'warnings=extra warnings-as-errors=on'}
+globalenv={'B2_CI_VERSION': '1', 'B2_VARIANT': 'release'}
 linuxglobalimage="cppalliance/droneubuntu2404:1"
 
 def main(ctx):
