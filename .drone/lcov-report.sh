@@ -78,7 +78,7 @@ else
     fi
     echo "After build.sh"
     echo "Running codecov.sh upload"
-    "$CI_DIR"/codecov.sh "upload" | tee /tmp/lcov-repo-results/$reponame 2>&1
+    "$CI_DIR"/codecov.sh "upload" 2>&1 | tee /tmp/lcov-repo-results/$reponame
     if [[ $? != 0 ]]; then
         echo "..failed. CODECOV FAILED coverage. LIBRARY $reponame"
         echo "$reponame failed coverage" >> /tmp/failed.txt
