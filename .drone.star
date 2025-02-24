@@ -14,7 +14,8 @@ linuxglobalimage="cppalliance/droneubuntu2404:1"
 
 def main(ctx):
   return [
-  linux_cxx("lcov report", "g++-14", packages="g++-14", buildtype="lcov-report", buildscript="drone", image="cppalliance/droneubuntu2404:1", environment={'LCOV_IGNORE_ERRORS_LEVEL': "off", 'B2_TOOLSET': 'gcc-14', 'B2_CXXSTD': '20'}, globalenv=globalenv),
+  # linux_cxx("lcov report", "g++-14", packages="g++-14", buildtype="lcov-report", buildscript="drone", image="cppalliance/droneubuntu2404:1", environment={'LCOV_IGNORE_ERRORS_LEVEL': "off", 'B2_TOOLSET': 'gcc-14', 'B2_CXXSTD': '20'}, globalenv=globalenv),
+  linux_cxx("lcov report", "g++-12", packages="g++-12", buildtype="lcov-report", buildscript="drone", image="cppalliance/droneubuntu2204:1", environment={'LCOV_IGNORE_ERRORS_LEVEL': "off", 'B2_TOOLSET': 'gcc-12', 'B2_CXXSTD': '20'}, globalenv=globalenv)
   ]
 
 # from https://github.com/boostorg/boost-ci
