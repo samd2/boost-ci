@@ -10,7 +10,7 @@ pwd
 
 export CODECOV_SCRIPT=${BOOST_CI_SRC_FOLDER}/ci/travis/codecov.sh
 export CI_DIR=${BOOST_CI_SRC_FOLDER}/ci
-export BOOST_CI_CODECOV_IO_UPLOAD=skip"
+export BOOST_CI_CODECOV_IO_UPLOAD="skip"
 
 export EXPORT_BOOST_SRC_DIR="yes"
 
@@ -21,7 +21,7 @@ touch /tmp/succeeded.txt
 # cd /opt/github/boostorg
 # git clone -b "develop" --depth 1 "https://github.com/boostorg/boost.git"
 # cd boost
-cd $BOOST_ROOT
+cd "$BOOST_ROOT"
 # clone all submodules
 git submodule update --init
 
@@ -31,6 +31,7 @@ cd libs/accumulators
 $CODECOV_SCRIPT
 cd ../..
 
+# shellcheck disable=SC2016
 textpart1='#!/bin/bash
 set -x
 reponame=$1
@@ -39,6 +40,7 @@ skiplist="'
 
 textpart2="${SKIPLIST}}"
 
+# shellcheck disable=SC2016
 textpart3='"
 # Filters.
 # jump ahead to continue testing
@@ -56,6 +58,7 @@ else
     runcodecov.sh '
 
 textpart4="${RUNCODECOV_FLAGS}"
+# shellcheck disable=SC2016
 textpart5='
     if [[ $? != 0 ]]; then
         echo "..failed. CODECOV FAILED. LIBRARY $reponame"
@@ -73,6 +76,7 @@ chmod 755 /usr/local/bin/runcodecov.sh
 echo "checking runcodecov.sh"
 cat /usr/local/bin/runcodecov.sh
 
+# shellcheck disable=SC2016
 git submodule foreach 'runcodecov.sh $name'
 
 failed=$(wc -l /tmp/failed.txt | cut -d" " -f1)
