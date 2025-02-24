@@ -8,7 +8,7 @@ RUNCODECOV_FLAGS=""
 
 pwd
 
-CODECOV_SCRIPT=$(pwd)/ci/codecov.sh
+CODECOV_SCRIPT=${BOOST_CI_SRC_FOLDER}/ci/codecov.sh
 CI_DIR=$(pwd)/ci
 
 export EXPORT_BOOST_SRC_DIR="yes"
