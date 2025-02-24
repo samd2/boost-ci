@@ -6,6 +6,8 @@ set -e
 SKIPLIST=""
 RUNCODECOV_FLAGS=""
 
+: "${LCOV_SKIP_PATTERN:='^[9]'}" # Set default lcov skip pattern
+
 pwd
 
 export CODECOV_SCRIPT=${BOOST_CI_SRC_FOLDER}/ci/travis/codecov.sh
@@ -72,9 +74,9 @@ else
         echo "..failed. CODECOV FAILED at build.sh. LIBRARY $reponame"
         echo "$reponame failed build.sh" >> /tmp/failed.txt
     fi
-
+    echo "After build.sh"
+    echo "Running codecov.sh upload"
     "$CI_DIR"/codecov.sh "upload"
-
     if [[ $? != 0 ]]; then
         echo "..failed. CODECOV FAILED coverage. LIBRARY $reponame"
         echo "$reponame failed coverage" >> /tmp/failed.txt
