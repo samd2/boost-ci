@@ -16,10 +16,6 @@ export EXPORT_BOOST_SRC_DIR="yes"
 touch /tmp/failed.txt
 touch /tmp/succeeded.txt
 
-apt-get update
-DEBIAN_FRONTEND="noninteractive" apt-get install -y tzdata
-apt-get install -y git sudo
-
 # mkdir -p /opt/github/boostorg
 # cd /opt/github/boostorg
 # git clone -b "develop" --depth 1 "https://github.com/boostorg/boost.git"
