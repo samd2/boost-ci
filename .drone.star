@@ -9,7 +9,7 @@
 #
 #
 # globalenv={'B2_CI_VERSION': '1', 'B2_VARIANT': 'debug,release', 'B2_FLAGS': 'warnings=extra warnings-as-errors=on'}
-globalenv={'B2_CI_VERSION': '1', 'B2_VARIANT': 'release', 'B2_ARGS': '--clean'}
+globalenv={'B2_CI_VERSION': '1', 'B2_VARIANT': 'release' }
 linuxglobalimage="cppalliance/droneubuntu2204:1"
 
 def main(ctx):
