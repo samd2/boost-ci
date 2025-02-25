@@ -11,7 +11,7 @@ pwd
 export CODECOV_SCRIPT=${BOOST_CI_SRC_FOLDER}/ci/travis/codecov.sh
 export CI_DIR=${BOOST_CI_SRC_FOLDER}/ci
 export BOOST_CI_CODECOV_IO_UPLOAD="skip"
-
+export LCOV_VERSION="v2.3"
 export EXPORT_BOOST_SRC_DIR="yes"
 
 touch /tmp/failed.txt
@@ -78,8 +78,8 @@ else
     fi
 
     echo "LIBRARY $reponame RESULTS:" >> /tmp/lcov-results.txt
-    grep "geninfo: ERROR" /tmp/lcov-repo-results/$reponame >> /tmp/lcov-results.txt || true
-    grep "geninfo: WARNING" /tmp/lcov-repo-results/$reponame >> /tmp/lcov-results.txt || true
+    grep "lcov: ERROR" /tmp/lcov-repo-results/$reponame >> /tmp/lcov-results.txt || true
+    grep "lcov: WARNING" /tmp/lcov-repo-results/$reponame >> /tmp/lcov-results.txt || true
 fi
 '
 
@@ -92,14 +92,22 @@ cat /usr/local/bin/runcodecov.sh
 # shellcheck disable=SC2016
 git submodule foreach 'runcodecov.sh $name'
 
+echo " "
+echo "The following is a collection of all lcov warnings/errors"
+echo " "
+cat /tmp/lcov-results.txt
+echo " "
+echo "The above list is a collection of all lcov warnings/errors"
+echo " "
+
 failed=$(wc -l /tmp/failed.txt | cut -d" " -f1)
 succeeded=$(wc -l /tmp/succeeded.txt | cut -d" " -f1)
 echo "$failed failed, $succeeded succeeded."
 echo ""
 cat /tmp/failed.txt
-#
-# if [ "$failed" != "0" ]; then
-#     exit 1
-# fi
 
-cat /tmp/lcov-results.txt
+sleep 60
+
+echo "Completed"
+
+
