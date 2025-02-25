@@ -54,7 +54,7 @@ elif [[ "$coverage_action" == "collect" ]] || [[ "$coverage_action" == "upload" 
         GCOV=gcov-${ver}
     fi
 
-    : "${LCOV_VERSION:=v2.1}" # Set default lcov version to install
+    : "${LCOV_VERSION:=v2.3}" # Set default lcov version to install
 
     : "${LCOV_BRANCH_COVERAGE:=1}" # Set default for branch coverage
 
@@ -99,7 +99,8 @@ elif [[ "$coverage_action" == "collect" ]] || [[ "$coverage_action" == "upload" 
 
     elif [[ "$LCOV_VERSION" =~ ^v[2-9] ]]; then
         sudo apt-get -o Acquire::Retries="${NET_RETRY_COUNT:-3}" -y -q --no-install-suggests --no-install-recommends install \
-            libcapture-tiny-perl libdatetime-perl libcpanel-json-xs-perl libjson-xs-perl || true
+            libcapture-tiny-perl libdatetime-perl libjson-xs-perl || true
+            # libcpanel-json-xs-perl is another json package alternative
         LCOV_OPTIONS="${LCOV_OPTIONS} --rc branch_coverage=${LCOV_BRANCH_COVERAGE} ${lcov_ignore_errors_flag}"
     fi
 

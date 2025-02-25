@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -xe
+set -e
+# set -x
 
 SKIPLIST=""
 
@@ -12,6 +13,7 @@ export CODECOV_SCRIPT=${BOOST_CI_SRC_FOLDER}/ci/travis/codecov.sh
 export CI_DIR=${BOOST_CI_SRC_FOLDER}/ci
 export BOOST_CI_CODECOV_IO_UPLOAD="skip"
 export LCOV_VERSION="v2.3"
+export LCOV_IGNORE_ERRORS_LEVEL=standard
 export EXPORT_BOOST_SRC_DIR="yes"
 
 touch /tmp/failed.txt
