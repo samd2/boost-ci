@@ -19,6 +19,7 @@ touch /tmp/succeeded.txt
 
 cd "$BOOST_ROOT"
 git submodule update --init --recursive
+./b2 headers
 
 # The script runcodecov.sh will be pieced together in parts, enabling variables
 # to be included into the contents of the script.
@@ -57,6 +58,9 @@ else
         exit 0
     fi
     export SELF
+
+    # clean disk space
+    rm -rf $BOOST_ROOT/bin.v2/libs
 
     # Run the parts of travis/codecov.sh separately:
     source "$CI_DIR"/codecov.sh "setup"
