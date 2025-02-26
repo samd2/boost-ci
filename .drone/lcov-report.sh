@@ -31,6 +31,7 @@ textpart1='#!/bin/bash
 set -x
 reponame=$1
 echo "reponame is $reponame"
+echo "date is $(date)"
 mkdir -p /tmp/lcov-repo-results || true
 skiplist="'
 
@@ -105,6 +106,15 @@ cat /tmp/lcov-results.txt
 echo " "
 echo "The above list is a collection of all lcov warnings/errors"
 echo " "
+
+echo " "
+echo "The following is a collection of less usual lcov warnings/errors"
+echo " "
+cat /tmp/lcov-results.txt | grep -v mismatch | grep -v inconsistent | grep -v unused
+echo " "
+echo "The above list is a collection of less usual lcov warnings/errors"
+echo " "
+
 
 failed=$(wc -l /tmp/failed.txt | cut -d" " -f1)
 succeeded=$(wc -l /tmp/succeeded.txt | cut -d" " -f1)
