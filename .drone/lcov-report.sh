@@ -3,7 +3,7 @@
 set -e
 set -x
 
-SKIPLIST=""
+SKIPLIST="math"
 
 : "${LCOV_SKIP_PATTERN:='^[9]'}" # Set default lcov skip pattern
 
