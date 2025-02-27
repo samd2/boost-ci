@@ -125,5 +125,3 @@ cat /tmp/failed.txt
 sleep 60
 
 echo "Completed"
-
-
