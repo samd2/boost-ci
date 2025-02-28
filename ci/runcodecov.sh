@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # set -x
+set -u
 
 reponame=$1
 echo "reponame is $reponame"
