@@ -1,9 +1,9 @@
 #!/bin/bash
 
 set -e
-set -x
+# set -x
 
-export LCOV_SKIPLIST="math"
+SKIPLIST="math"
 
 : "${LCOV_SKIP_PATTERN:='^[9]'}" # Set default lcov skip pattern
 
@@ -20,8 +20,82 @@ cd "$BOOST_ROOT"
 git submodule update --init --recursive --jobs 4
 ./b2 headers
 
+# The script runcodecov.sh will be pieced together in parts, enabling variables
+# to be included into the contents of the script.
+
 # shellcheck disable=SC2016
-git submodule foreach '$CI_DIR/runcodecov.sh $name'
+textpart1='#!/bin/bash
+set -x
+reponame=$1
+echo "reponame is $reponame"
+echo "date is $(date)"
+mkdir -p /tmp/lcov-repo-results || true
+skiplist="'
+
+textpart2="${SKIPLIST}"
+
+# shellcheck disable=SC2016
+textpart3='"
+# Filters.
+# jump ahead to continue testing
+
+if [[ "$reponame" =~ '
+textpart4="${LCOV_SKIP_PATTERN}"
+# shellcheck disable=SC2016
+textpart5=' ]]; then
+# if [[ "$reponame" =~ ^[9] ]]; then
+   echo "skipping ahead X letters"
+elif [[ "$skiplist" =~ $reponame ]]; then
+    echo "repo in skiplist"
+else
+    # required vars for codecov.sh:
+    # BOOST_ROOT is already set
+    export BOOST_CI_SRC_FOLDER=$(pwd)
+    SELF=$(python3 "$CI_DIR/get_libname.py")
+    if [[ $? != 0 ]]; then
+        echo "..failed to determine SELF name of lib"
+        echo "$reponame failed to determine SELF variable. May be expected. Continuing." >> /tmp/failed.txt
+        exit 0
+    fi
+    export SELF
+
+    # clean disk space
+    rm -rf $BOOST_ROOT/bin.v2/libs
+
+    # Run the parts of travis/codecov.sh separately:
+    source "$CI_DIR"/codecov.sh "setup"
+    set +e
+    "$CI_DIR"/build.sh
+    if [[ $? != 0 ]]; then
+        echo "..failed. CODECOV FAILED at build.sh. LIBRARY $reponame"
+        echo "$reponame failed build.sh" >> /tmp/failed.txt
+    fi
+    echo "After build.sh"
+    echo "Running codecov.sh collect"
+    set -o pipefail
+    "$CI_DIR"/codecov.sh "collect" 2>&1 | tee /tmp/lcov-repo-results/$reponame
+    if [[ $? != 0 ]]; then
+        echo "..failed. CODECOV FAILED coverage. LIBRARY $reponame"
+        echo "$reponame failed coverage" >> /tmp/failed.txt
+    else
+        echo "LIBRARY $reponame SUCCEEDED."
+        echo "$reponame" >> /tmp/succeeded.txt
+    fi
+
+    echo "LIBRARY $reponame RESULTS:" >> /tmp/lcov-results.txt
+    grep "lcov: ERROR" /tmp/lcov-repo-results/$reponame >> /tmp/lcov-results.txt || true
+    grep "lcov: WARNING" /tmp/lcov-repo-results/$reponame >> /tmp/lcov-results.txt || true
+fi
+'
+
+textsource="${textpart1}${textpart2}${textpart3}${textpart4}${textpart5}"
+echo "$textsource" > /usr/local/bin/runcodecov.sh
+chmod 755 /usr/local/bin/runcodecov.sh
+echo "checking runcodecov.sh"
+cat /usr/local/bin/runcodecov.sh
+
+# shellcheck disable=SC2016
+git submodule foreach 'runcodecov.sh $name'
 
 echo " "
 echo "The following is a collection of all lcov warnings/errors"
