@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -u
+set -x # during debugging
 # not set -e since errors are expected.
 
 reponame=$1
