@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+# set -x
 
 reponame=$1
 echo "reponame is $reponame"
@@ -16,7 +16,8 @@ elif [[ "$LCOV_SKIPLIST" =~ $reponame ]]; then
 else
     # required vars for codecov.sh:
     # BOOST_ROOT is already set
-    export BOOST_CI_SRC_FOLDER=$(pwd)
+    BOOST_CI_SRC_FOLDER=$(pwd)
+    export BOOST_CI_SRC_FOLDER
     SELF=$(python3 "$CI_DIR/get_libname.py")
     # shellcheck disable=SC2181
     if [[ $? != 0 ]]; then
